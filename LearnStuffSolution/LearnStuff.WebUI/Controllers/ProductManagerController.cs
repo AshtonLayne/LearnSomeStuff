@@ -5,16 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using LearnStuff.Core.Models;
 using LearnStuff.DataAccess.InMemory;
+using LearnStuff.Core.ViewModels;
 
 namespace LearnStuff.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
         ProductCache context;
+        CategoryCache productCategories;
 
         public ProductManagerController()
         {
             context = new ProductCache();
+            productCategories = new CategoryCache();
         }
         // GET: ProductManager
         public ActionResult Index()
@@ -25,8 +28,10 @@ namespace LearnStuff.WebUI.Controllers
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+            viewModel.Product = new Product();
+            viewModel.ProductCategories = productCategories.Collection();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -55,7 +60,10 @@ namespace LearnStuff.WebUI.Controllers
             }
             else
             {
-                return View(productToEdit);
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                viewModel.Product = productToEdit;
+                viewModel.ProductCategories = productCategories.Collection();
+                return View(viewModel);
             }
         }
 

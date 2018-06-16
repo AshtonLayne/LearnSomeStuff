@@ -41,7 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductCache.cs" />
+    <Compile Include="ObjectCacheModels\CategoryCache.cs" />
+    <Compile Include="ObjectCacheModels\ProductCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
