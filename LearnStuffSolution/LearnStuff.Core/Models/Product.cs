@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace LearnStuff.Core.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public string ProductID { get; set; }
+        
 
         [StringLength (20)]
         [DisplayName ("Product Name")]
@@ -22,9 +22,6 @@ namespace LearnStuff.Core.Models
         public string Category { get; set; }
         public string Image { get; set; }
 
-        public Product ()
-        {
-            this.ProductID = Guid.NewGuid().ToString();
-        }
+
     }
 }

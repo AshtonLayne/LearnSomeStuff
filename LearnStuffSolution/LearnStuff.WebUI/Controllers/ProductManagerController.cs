@@ -11,13 +11,13 @@ namespace LearnStuff.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductCache context;
-        CategoryCache productCategories;
+        InMemoryRepo<Product> context;
+        InMemoryRepo<ProductCategory> productCategories;
 
         public ProductManagerController()
         {
-            context = new ProductCache();
-            productCategories = new CategoryCache();
+            context = new InMemoryRepo<Product>();
+            productCategories = new InMemoryRepo<ProductCategory>();
         }
         // GET: ProductManager
         public ActionResult Index()
@@ -44,7 +44,7 @@ namespace LearnStuff.WebUI.Controllers
             else
             {
                 context.Insert(product);
-                context.CommitToMemory();
+                context.Commit();
 
                 return RedirectToAction("Index");
             }
@@ -89,7 +89,7 @@ namespace LearnStuff.WebUI.Controllers
                 productToEdit.ProductName = product.ProductName;
                 productToEdit.Price = product.Price;
 
-                context.CommitToMemory();
+                context.Commit();
 
                 return RedirectToAction("Index");
 
@@ -125,8 +125,8 @@ namespace LearnStuff.WebUI.Controllers
             }
             else
             {
-                context.Delete(ID);
-                context.CommitToMemory();
+                context.Delete(product);
+                context.Commit();
                 return RedirectToAction("Index");
             }
         }

@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace LearnStuff.Core.Models
 {
-    public class ProductCategory
+    public class ProductCategory : BaseEntity
     {
-        public string CategoryID { get; set; }
+        
         public string CategoryDescription { get; set; }
 
-        public ProductCategory()
-        {
-            this.CategoryID = Guid.NewGuid().ToString();
-        }
+
     }
 }

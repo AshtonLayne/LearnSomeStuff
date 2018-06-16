@@ -10,11 +10,11 @@ namespace LearnStuff.WebUI.Controllers
 {
     public class CategoryManagerController : Controller
     {
-        CategoryCache context;
+        InMemoryRepo<ProductCategory> context;
 
         public CategoryManagerController()
         {
-            context = new CategoryCache();
+            context = new InMemoryRepo<ProductCategory>();
         }
         // GET: CategoryManager
         public ActionResult Index()
@@ -39,7 +39,7 @@ namespace LearnStuff.WebUI.Controllers
             else
             {
                 context.Insert(pc);
-                context.CommitToMemory();
+                context.Commit();
 
                 return RedirectToAction("Index");
             }
@@ -77,7 +77,7 @@ namespace LearnStuff.WebUI.Controllers
 
                 categoryToEdit.CategoryDescription = pc.CategoryDescription;
                 
-                context.CommitToMemory();
+                context.Commit();
 
                 return RedirectToAction("Index");
                 
@@ -112,8 +112,8 @@ namespace LearnStuff.WebUI.Controllers
             }
             else
             {
-                context.Delete(ID);
-                context.CommitToMemory();
+                context.Delete(pc);
+                context.Commit();
                 return RedirectToAction("Index");
             }
         }
