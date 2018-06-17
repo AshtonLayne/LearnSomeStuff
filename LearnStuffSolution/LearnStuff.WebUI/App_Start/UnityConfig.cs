@@ -2,6 +2,7 @@ using System;
 using LearnStuff.Core.Contracts;
 using LearnStuff.Core.Models;
 using LearnStuff.DataAccess.InMemory;
+using LearnStuff.DataAccess.SQL;
 using Unity;
 
 namespace LearnStuff.WebUI
@@ -45,8 +46,8 @@ namespace LearnStuff.WebUI
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
 
-            container.RegisterType<IRepository<Product>, InMemoryRepo<Product>>();
-            container.RegisterType<IRepository<ProductCategory>, InMemoryRepo<ProductCategory>>();
+            container.RegisterType<IRepository<Product>, SQLRepo<Product>>();
+            container.RegisterType<IRepository<ProductCategory>, SQLRepo<ProductCategory>>();
 
         }
     }

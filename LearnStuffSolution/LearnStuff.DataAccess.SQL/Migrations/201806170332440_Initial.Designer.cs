@@ -13,7 +13,7 @@ namespace LearnStuff.DataAccess.SQL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201806170127041_Initial"; }
+            get { return "201806170332440_Initial"; }
         }
         
         string IMigrationMetadata.Source

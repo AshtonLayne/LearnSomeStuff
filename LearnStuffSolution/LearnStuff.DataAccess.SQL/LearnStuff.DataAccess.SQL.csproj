@@ -48,12 +48,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\201806170127041_Initial.cs" />
-    <Compile Include="Migrations\201806170127041_Initial.Designer.cs">
-      <DependentUpon>201806170127041_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201806170332440_Initial.cs" />
+    <Compile Include="Migrations\201806170332440_Initial.Designer.cs">
+      <DependentUpon>201806170332440_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -118,8 +119,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806170127041_Initial.resx">
-      <DependentUpon>201806170127041_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806170332440_Initial.resx">
+      <DependentUpon>201806170332440_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
