@@ -7,6 +7,7 @@ using LearnStuff.Core.Models;
 using LearnStuff.DataAccess.InMemory;
 using LearnStuff.Core.ViewModels;
 using LearnStuff.Core.Contracts;
+using System.IO;
 
 namespace LearnStuff.WebUI.Controllers
 {
@@ -36,13 +37,21 @@ namespace LearnStuff.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create (Product product)
+        public ActionResult Create (Product product, HttpPostedFileBase file)
         {
             if (!ModelState.IsValid)
             {
                 return View(product);
             }
             else
+            {
+                if (file != null)
+                {
+                    product.Image = product.ID + Path.GetExtension(file.FileName);
+                    file.SaveAs(Server.MapPath("//Content//ProductImages") + product.Image);
+                }
+            }
+
             {
                 context.Insert(product);
                 context.Commit();
@@ -69,7 +78,7 @@ namespace LearnStuff.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit (Product product, string ID)
+        public ActionResult Edit (Product product, string ID, HttpPostedFileBase file)
         {
             Product productToEdit = context.Find(ID);
 
@@ -83,10 +92,15 @@ namespace LearnStuff.WebUI.Controllers
                 {
                     return View(product);
                 }
+                
+                    if (file != null)
+                    {
+                        productToEdit.Image = product.ID + Path.GetExtension(file.FileName);
+                        file.SaveAs(Server.MapPath("//Content//ProductImages//") + productToEdit.Image);
+                    }
 
                 productToEdit.Category = product.Category;
                 productToEdit.ProductDesc = product.ProductDesc;
-                productToEdit.Image = product.Image;
                 productToEdit.ProductName = product.ProductName;
                 productToEdit.Price = product.Price;
 
