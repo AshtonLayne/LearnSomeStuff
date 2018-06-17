@@ -6,18 +6,19 @@ using System.Web.Mvc;
 using LearnStuff.Core.Models;
 using LearnStuff.DataAccess.InMemory;
 using LearnStuff.Core.ViewModels;
+using LearnStuff.Core.Contracts;
 
 namespace LearnStuff.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        InMemoryRepo<Product> context;
-        InMemoryRepo<ProductCategory> productCategories;
+        IRepository<Product> context;
+        IRepository<ProductCategory> productCategories;
 
-        public ProductManagerController()
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoryContext)
         {
-            context = new InMemoryRepo<Product>();
-            productCategories = new InMemoryRepo<ProductCategory>();
+            context = productContext;
+            productCategories = productCategoryContext;
         }
         // GET: ProductManager
         public ActionResult Index()
@@ -52,16 +53,16 @@ namespace LearnStuff.WebUI.Controllers
 
         public ActionResult Edit (string ID)
         {
-            Product productToEdit = context.Find(ID);
+            Product product = context.Find(ID);
 
-            if (productToEdit == null)
+            if (product == null)
             {
                 return HttpNotFound();
             }
             else
             {
                 ProductManagerViewModel viewModel = new ProductManagerViewModel();
-                viewModel.Product = productToEdit;
+                viewModel.Product = product;
                 viewModel.ProductCategories = productCategories.Collection();
                 return View(viewModel);
             }
@@ -115,7 +116,7 @@ namespace LearnStuff.WebUI.Controllers
 
         [HttpPost]
         [ActionName ("Delete")]
-        public ActionResult ConfirmDelete (Product product, string ID)
+        public ActionResult ConfirmDelete (string ID)
         {
             Product productToDelete = context.Find(ID);
 
@@ -125,7 +126,7 @@ namespace LearnStuff.WebUI.Controllers
             }
             else
             {
-                context.Delete(product);
+                context.Delete(ID);
                 context.Commit();
                 return RedirectToAction("Index");
             }

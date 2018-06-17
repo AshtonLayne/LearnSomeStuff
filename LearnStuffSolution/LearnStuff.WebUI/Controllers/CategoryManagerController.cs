@@ -4,17 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LearnStuff.Core.Models;
+using LearnStuff.Core.Contracts;
 using LearnStuff.DataAccess.InMemory;
 
 namespace LearnStuff.WebUI.Controllers
 {
     public class CategoryManagerController : Controller
     {
-        InMemoryRepo<ProductCategory> context;
+        IRepository<ProductCategory> context;
 
-        public CategoryManagerController()
+        public CategoryManagerController(IRepository<ProductCategory> context)
         {
-            context = new InMemoryRepo<ProductCategory>();
+            this.context = context;
         }
         // GET: CategoryManager
         public ActionResult Index()
@@ -102,7 +103,7 @@ namespace LearnStuff.WebUI.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult ConfirmDelete(ProductCategory pc, string ID)
+        public ActionResult ConfirmDelete(string ID)
         {
             ProductCategory categoryToDelete = context.Find(ID);
 
@@ -112,7 +113,7 @@ namespace LearnStuff.WebUI.Controllers
             }
             else
             {
-                context.Delete(pc);
+                context.Delete(ID);
                 context.Commit();
                 return RedirectToAction("Index");
             }

@@ -5,10 +5,11 @@ using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
 using LearnStuff.Core.Models;
+using LearnStuff.Core.Contracts;
 
 namespace LearnStuff.DataAccess.InMemory
 {
-    public class InMemoryRepo<T> where T : BaseEntity
+    public class InMemoryRepo<T> : IRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
@@ -68,13 +69,13 @@ namespace LearnStuff.DataAccess.InMemory
             return items.AsQueryable();
         }
 
-        public void Delete(T t)
+        public void Delete(string ID)
         {
-            T tToDelete = items.Find(i => i.ID == t.ID);
+            T tToDelete = items.Find(i => i.ID == ID);
 
             if (tToDelete != null)
             {
-                tToDelete = t;
+                items.Remove(tToDelete);
             }
             else
             {
